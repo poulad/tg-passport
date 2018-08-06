@@ -2,12 +2,8 @@ import * as express from 'express';
 import { NextFunction, Request, Response } from 'express';
 import * as morgan from 'morgan';
 import * as bodyParser from 'body-parser';
-import * as cookieParser from 'cookie-parser';
-import * as session from 'express-session';
-
-import { loadAppConfigurations } from './config/app-config';
-// import { configureMongoose } from './config/mongoose';
 import { ApiResponse } from './models/api-response';
+import { init } from './services/update-getter';
 
 // noinspection JSUnusedGlobalSymbols
 export class Server {
@@ -21,6 +17,13 @@ export class Server {
         await server.registerRoutes();
         server.registerErrorHandler();
 
+        if (process.env.NODE_ENV === 'development') {
+            init()
+                .catch(console.error);
+        } else {
+            // ToDo set webhook
+        }
+
         return server;
     }
 
@@ -29,26 +32,12 @@ export class Server {
     }
 
     private async configureApp() {
-        process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-        const appConfig = loadAppConfigurations();
-
-        // await configureMongoose();
-        // configurePassport();
-
         this.app.use(morgan(<any>'dev'));
 
         this.app.use(bodyParser.urlencoded({
             extended: true
         }));
         this.app.use(bodyParser.json());
-
-        this.app.use(cookieParser());
-
-        this.app.use(session({
-            secret: appConfig.sessionSecret,
-            resave: true,
-            saveUninitialized: true
-        }));
 
         this.app.use(express.static(__dirname + '/public', {dotfiles: 'ignore'}));
     }

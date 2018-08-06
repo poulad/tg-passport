@@ -18,7 +18,9 @@
         "express": "^4.16.3",
         "express-session": "^1.15.6",
         "mongoose": "^5.2.6",
-        "morgan": "^1.7.35"
+        "morgan": "^1.7.35",
+        "request": "^2.87.0",
+        "request-promise": "^4.2.2"
     },
     "devDependencies": {
         "@types/body-parser": "^1.17.0",
@@ -27,6 +29,7 @@
         "@types/express-session": "^1.15.10",
         "@types/mongoose": "^5.2.3",
         "@types/morgan": "^1.7.35",
+        "@types/request-promise": "^4.1.42",
         "@types/shelljs": "^0.8.0",
         "nodemon": "^1.18.3",
         "shelljs": "^0.8.2",

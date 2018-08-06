@@ -1,12 +1,24 @@
 export interface AppConfig {
-    db: string;
-    sessionSecret: string;
+    token: string;
 }
 
-export function loadAppConfigurations(): AppConfig {
-    const config = <AppConfig> require('./env/' + process.env.NODE_ENV + '.js');
+let config: AppConfig;
 
-    config.db = process.env['APP_MONGO'] || config.db;
+export function getAppConfig(): AppConfig {
+    if (config) {
+        return config;
+    }
+
+    process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+    config = {
+        token: ''
+    };
+
+    if (process.env['APP_CONFIG']) {
+        config = JSON.parse(process.env['APP_CONFIG']);
+    } else {
+        Object.assign(config, require(`./env/${process.env.NODE_ENV}`));
+    }
 
     return config;
 }
