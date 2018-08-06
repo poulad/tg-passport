@@ -4,9 +4,10 @@
     "main": "bin/www",
     "private": true,
     "scripts": {
-        "heroku-postbuild": "npm run build:prod",
+        "heroku-postbuild": "npm run build",
         "start": "node \"bin/www.js\"",
-        "build": "npm run tsc -- --watch false --sourceMap false",
+        "build": "node build.js",
+        "build:prod": "npm run tsc -- --watch false --sourceMap false",
         "build:watch": "npm run tsc -- --watch true",
         "tsc": "node \"node_modules/typescript/bin/tsc\"",
         "nodemon": "node node_modules/nodemon/bin/nodemon.js"
@@ -26,7 +27,9 @@
         "@types/express-session": "^1.15.10",
         "@types/mongoose": "^5.2.3",
         "@types/morgan": "^1.7.35",
+        "@types/shelljs": "^0.8.0",
         "nodemon": "^1.18.3",
+        "shelljs": "^0.8.2",
         "tslint": "^5.11.0",
         "typescript": "^2.9.2"
     }
